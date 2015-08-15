@@ -4,7 +4,7 @@ using System.Threading;
 using Xamarin.UITest.Queries;
 using System.Linq;
 
-namespace Fortis.OutageMap.UITests
+namespace RedBit
 {
 	public static class AppExtension
 	{
