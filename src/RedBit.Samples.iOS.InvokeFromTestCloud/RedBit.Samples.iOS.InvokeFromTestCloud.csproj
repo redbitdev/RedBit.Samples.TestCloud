@@ -109,7 +109,6 @@
   <ItemGroup>
     <None Include="Info.plist" />
     <None Include="Entitlements.plist" />
-    <None Include="RedBit.Samples.iOS.InvokeFromTestCloud.exe" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
