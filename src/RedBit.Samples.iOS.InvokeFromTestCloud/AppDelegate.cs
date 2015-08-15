@@ -10,7 +10,6 @@ namespace RedBit.Samples.iOS.InvokeFromTestCloud
 	// application events from iOS.
 
 	[Register ("AppDelegate")]
-	[Protocol]
 	public partial class AppDelegate : UIApplicationDelegate
 	{
 		
