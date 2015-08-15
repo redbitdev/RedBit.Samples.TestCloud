@@ -13,17 +13,23 @@ namespace RedBit
 	public class UITests
 	{
 		internal IApp _app;
+        private IScreenQueries _screenQueries;
+        private bool _isIos = false;
 
 		public string PathToIPA { get; private set; }
 
+        public string PathToAPK { get; private set; }
+
 		private string API_KEY = "8cf2e1b42aa48fad1944279044555025";
+
 
 		[TestFixtureSetUp]
 		public void TestFixtureSetup()
 		{
 			if (TestEnvironment.IsTestCloud)
 			{
-				PathToIPA = String.Empty;
+                PathToAPK = String.Empty;
+                PathToIPA = String.Empty;
 			}
 			else
 			{
@@ -33,28 +39,39 @@ namespace RedBit
 				string dir = fi.Directory.Parent.Parent.Parent.FullName;
 
 				PathToIPA = Path.Combine(dir, "RedBit.Samples.iOS.InvokeFromTestCloud", "bin", "iPhoneSimulator", "Debug", "RedBit.Samples.iOS.InvokeFromTestCloud.app");
-			}
+                PathToAPK = Path.Combine(dir, "RedBit.Samples.Droid.InvokeFromTestCloud", "bin", "Release", "RedBit.Samples.Droid.InvokeFromTestCloud.apk");
+            }
 		}
 			
 		[SetUp]
 		public void SetUp()
 		{
 			if (TestEnvironment.Platform.Equals(TestPlatform.TestCloudiOS))
-			{// configure the app
+			{
+                // Setup the screenQueries
+                _screenQueries = new iOSScreenQueries();
+
+                // configure the app
 				_app = ConfigureApp
 					.iOS
 					.StartApp();
 			}
 			else if (TestEnvironment.Platform.Equals(TestPlatform.TestCloudAndroid))
 			{
-				// no op
+                // Setup the screenQueries
+                _screenQueries = new AndroidScreenQueries();
+                _isIos = true;
+
+                // configure the app
+                _app = ConfigureApp
+                    .Android
+                    .StartApp();
 			}
 			else if (TestEnvironment.Platform.Equals(TestPlatform.Local))
 			{
-
 				// NOTE Enable or disable the lines depending on what platform you want ot test
 				SetupForiOSLocalTesting ();				
-				    
+//                SetupForAndroidLocalTesting();
 			}
 			else
 			{
@@ -64,6 +81,11 @@ namespace RedBit
 
 		private void SetupForiOSLocalTesting()
 		{
+            _isIos = true;
+
+            // Setup the screenQueries
+            _screenQueries = new iOSScreenQueries();
+            
 			// NOTE - device identifier is different on every machine so need to run this
 			// on the command line "xcrun instruments -s devices" to get a list of devices
 
@@ -79,29 +101,65 @@ namespace RedBit
 				.AppBundle(PathToIPA)
 				.StartApp();
 
+
 		}
+
+        private void SetupForAndroidLocalTesting(){
+            // Setup the screenQueries
+            _screenQueries = new AndroidScreenQueries();
+
+            // configure the android appuitest 
+            _app = ConfigureApp.Android
+                .ApiKey(API_KEY)
+                .ApkFile(PathToAPK)
+                .StartApp();
+        }
+
+        /// <summary>
+        /// This is how a real test should be written and not using an export attribute. 
+        /// The samples are only to get started with exported 
+        /// </summary>
+        [Test]
+        public void TapItemTest(){
+            if (_isIos)
+            {
+                _app.WaitForElement(_screenQueries.MainControl);
+
+                // tap the add button
+                _app.Tap(c => c.Button("Add"));
+
+                // what for the item
+                _app.WaitForElement(s => s.Class("UITableViewLabel"));
+
+                // select the item in tableview
+                _app.Tap(s => s.Class("UITableViewLabel"));
+
+                // go back
+                _app.Back();
+
+                // assert as we are good
+                Assert.Pass();
+            }
+            else
+                Assert.Fail("Real test not implemented for android yet");
+        }
 
 		[Test]
 		public void InvokeAddNewItemTest(){
 
-            _app.WaitFor(500);
-
 			// wait for nav button so we know splash is gone
-			_app.WaitForElement(s=>s.Class("UINavigationButton"));
+            _app.WaitForElement(_screenQueries.MainControl);
 
 			// invoke the method within masterviewcontroller
 			_app.Invoke("InvokeAddNewItem:", "");
 
 		}
 
-
 		[Test]
 		public void InvokeTapItemTest(){
-            _app.WaitFor(500);
-
 			// wait for nav button so we know splash is gone
-			_app.WaitForElement(s=>s.Class("UINavigationButton"));
-//			_app.Repl ();
+            _app.WaitForElement(_screenQueries.MainControl);
+
 			// add an item
 			_app.Invoke("InvokeAddNewItem", "");
 
@@ -109,37 +167,12 @@ namespace RedBit
 			_app.Invoke("InvokeTapItem", "0");
 		}
 
-		/// <summary>
-		/// This is how a real test should be written and not using an export attribute. The samples are only to get started with exported 
-		/// </summary>
-		[Test]
-		public void TapItemTest(){
-            _app.WaitFor(500);
-
-			_app.WaitForElement(s=>s.Class("UINavigationButton"));
-
-			// tap the add button
-			_app.Tap (c => c.Button ("Add"));
-
-			// what for the item
-			_app.WaitForElement(s=>s.Class("UITableViewLabel"));
-
-			// select the item in tableview
-			_app.Tap(s=>s.Class("UITableViewLabel"))   ;
-
-			// go back
-			_app.Back();
-
-			// assert as we are good
-			Assert.Pass();
-		}
+		
 
 		[Test]
 		public void InvokeTapItemTestFail(){
-            _app.WaitFor(500);
-
 			// wait for nav button so we know splash is gone
-			_app.WaitForElement (s => s.Class ("UINavigationButton"));
+            _app.WaitForElement(_screenQueries.MainControl);
 
 			// add an item
 			_app.Invoke ("InvokeAddNewItem", "");

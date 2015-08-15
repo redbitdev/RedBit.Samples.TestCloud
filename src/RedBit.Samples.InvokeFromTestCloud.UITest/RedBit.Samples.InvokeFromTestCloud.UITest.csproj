@@ -39,6 +39,7 @@
   <ItemGroup>
     <Compile Include="UITests.cs" />
     <Compile Include="AppExtensions.cs" />
+    <Compile Include="IScreenQueries.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
