@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RedBit.Samples.iOS.InvokeFromTestCloud", "RedBit.Samples.iOS.InvokeFromTestCloud\RedBit.Samples.iOS.InvokeFromTestCloud.csproj", "{E1015E4B-4AEB-4BD5-B9F8-72CBB44261A3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RedBit.Samples.iOS.InvokeFromTestCloud.UITest", "RedBit.Samples.iOS.InvokeFromTestCloud.UITest\RedBit.Samples.iOS.InvokeFromTestCloud.UITest.csproj", "{95B588B1-1CF3-4F68-BFCA-1C03E297E79F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RedBit.Samples.InvokeFromTestCloud.UITest", "RedBit.Samples.iOS.InvokeFromTestCloud.UITest\RedBit.Samples.InvokeFromTestCloud.UITest.csproj", "{95B588B1-1CF3-4F68-BFCA-1C03E297E79F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
