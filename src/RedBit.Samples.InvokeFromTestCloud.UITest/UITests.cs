@@ -148,6 +148,36 @@ namespace RedBit
 
         }
 
+        [Test]
+        public void TapItemTestWithInvoke()
+        {
+            // wait for nav button so we know splash is gone
+            _app.WaitForElement(_screenQueries.MainControl);
+
+            // add an item
+            _app.Invoke("InvokeAddNewItem", "");
+
+            // what for the item
+            _app.WaitForElement(_screenQueries.ListTextItem);
+
+            // tap the first item
+            _app.Invoke("InvokeTapItem", "0");
+
+            if (_isIos)
+            {
+                // for ios we go back
+                _app.Back();
+            }
+            else
+            {
+                // for android we need to make sure there is a message
+                _app.WaitForElement(s => s.Marked("message"));
+            }
+
+            // assert as we are good
+            Assert.Pass();
+        }
+
 		[Test]
 		public void InvokeAddNewItemTest(){
 			// wait for nav button so we know splash is gone
@@ -188,6 +218,6 @@ namespace RedBit
 				Assert.Pass ();
 			}
 		}
-	}
+    }
 }
 
