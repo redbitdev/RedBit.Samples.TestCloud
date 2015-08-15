@@ -83,6 +83,9 @@ namespace RedBit
 
 		[Test]
 		public void InvokeAddNewItemTest(){
+
+            _app.WaitFor(500);
+
 			// wait for nav button so we know splash is gone
 			_app.WaitForElement(s=>s.Class("UINavigationButton"));
 
@@ -94,6 +97,8 @@ namespace RedBit
 
 		[Test]
 		public void InvokeTapItemTest(){
+            _app.WaitFor(500);
+
 			// wait for nav button so we know splash is gone
 			_app.WaitForElement(s=>s.Class("UINavigationButton"));
 //			_app.Repl ();
@@ -109,6 +114,8 @@ namespace RedBit
 		/// </summary>
 		[Test]
 		public void TapItemTest(){
+            _app.WaitFor(500);
+
 			_app.WaitForElement(s=>s.Class("UINavigationButton"));
 
 			// tap the add button
@@ -129,6 +136,7 @@ namespace RedBit
 
 		[Test]
 		public void InvokeTapItemTestFail(){
+            _app.WaitFor(500);
 
 			// wait for nav button so we know splash is gone
 			_app.WaitForElement (s => s.Class ("UINavigationButton"));
