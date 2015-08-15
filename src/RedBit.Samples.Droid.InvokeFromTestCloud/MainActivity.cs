@@ -22,10 +22,28 @@ namespace RedBit.Samples.Droid.InvokeFromTestCloud
 
             _adapter = new DTAdapter(this);
 
-            ListAdapter = _adapter;
-
+            this.ListAdapter = _adapter;
         }
 
+        public override bool OnCreateOptionsMenu(IMenu menu)
+        {
+            this.MenuInflater.Inflate(Resource.Menu.menu, menu);
+            return true;
+        }
+
+        public override bool OnOptionsItemSelected(IMenuItem item)
+        {
+            switch (item.ItemId)
+            {
+                case Resource.Id.action_add:
+                    InvokeAddNewItem(null);
+                    break;
+                default:
+                    break;
+            }
+
+            return true;
+        }
         protected override void OnListItemClick(ListView l, View v, int position, long id)
         {
             var t = _adapter.GetItemText(position);
