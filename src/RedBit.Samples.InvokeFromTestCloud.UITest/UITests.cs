@@ -70,8 +70,8 @@ namespace RedBit
 			else if (TestEnvironment.Platform.Equals(TestPlatform.Local))
 			{
 				// NOTE Enable or disable the lines depending on what platform you want ot test
-				SetupForiOSLocalTesting ();				
-//                SetupForAndroidLocalTesting();
+//				SetupForiOSLocalTesting ();				
+                SetupForAndroidLocalTesting();
 			}
 			else
 			{
@@ -121,27 +121,31 @@ namespace RedBit
         /// </summary>
         [Test]
         public void TapItemTest(){
+            _app.WaitForElement(_screenQueries.MainControl);
+
+            // tap the add button
+            _app.Tap(_screenQueries.AddButton);
+
+            // what for the item
+            _app.WaitForElement(_screenQueries.ListTextItem);
+
+            // select the item in tableview
+            _app.Tap(_screenQueries.ListTextItem);
+
             if (_isIos)
             {
-                _app.WaitForElement(_screenQueries.MainControl);
-
-                // tap the add button
-                _app.Tap(c => c.Button("Add"));
-
-                // what for the item
-                _app.WaitForElement(s => s.Class("UITableViewLabel"));
-
-                // select the item in tableview
-                _app.Tap(s => s.Class("UITableViewLabel"));
-
-                // go back
+                // for ios we go back
                 _app.Back();
-
-                // assert as we are good
-                Assert.Pass();
             }
             else
-                Assert.Fail("Real test not implemented for android yet");
+            {
+                // for android we need to make sure there is a message
+                _app.WaitForElement(s => s.Marked("message"));
+            }
+
+            // assert as we are good
+            Assert.Pass();
+
         }
 
 		[Test]
