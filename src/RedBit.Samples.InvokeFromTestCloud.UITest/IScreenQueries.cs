@@ -32,7 +32,7 @@ namespace RedBit
         {
             get
             {
-                return c => c.Class("");
+                return c => c.Class("ListView");
             }
         }
         #endregion

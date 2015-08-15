@@ -20,7 +20,7 @@ namespace RedBit
 
         public string PathToAPK { get; private set; }
 
-		private string API_KEY = "8cf2e1b42aa48fad1944279044555025";
+        private string API_KEY = "8cf2e1b42aa48fad1944279044555025";
 
 
 		[TestFixtureSetUp]
@@ -146,12 +146,11 @@ namespace RedBit
 
 		[Test]
 		public void InvokeAddNewItemTest(){
-
 			// wait for nav button so we know splash is gone
             _app.WaitForElement(_screenQueries.MainControl);
 
 			// invoke the method within masterviewcontroller
-			_app.Invoke("InvokeAddNewItem:", "");
+			_app.Invoke("InvokeAddNewItem", "");
 
 		}
 
