@@ -40,7 +40,7 @@ namespace RedBit.Samples.Droid.InvokeFromTestCloud
 
         [Preserve]
         [Java.Interop.Export]
-        public void InvokeAddNewItem(){
+        public void InvokeAddNewItem(string value){
             AddNewItem();
         }
 
