@@ -51,6 +51,8 @@ namespace RedBit
                 // Setup the screenQueries
                 _screenQueries = new iOSScreenQueries();
 
+                _isIos = true;
+
                 // configure the app
 				_app = ConfigureApp
 					.iOS
@@ -60,7 +62,6 @@ namespace RedBit
 			{
                 // Setup the screenQueries
                 _screenQueries = new AndroidScreenQueries();
-                _isIos = true;
 
                 // configure the app
                 _app = ConfigureApp

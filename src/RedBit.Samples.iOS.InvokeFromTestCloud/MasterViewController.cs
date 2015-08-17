@@ -23,7 +23,10 @@ namespace RedBit.Samples.iOS.InvokeFromTestCloud
 			InvokeTapItem = (index) => {
 				var val = default(UInt32);
 				if (UInt32.TryParse (index, out val))
+                {
 					TableView.SelectRow (NSIndexPath.Create(0,val), true, UITableViewScrollPosition.Top);
+                    this.PerformSegue("showDetail", this);
+                }
 				else
 					throw new Exception (string.Format ("Unable to parse index parameter of '{0}'", index)); 
 			};
